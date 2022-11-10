@@ -23,7 +23,6 @@ app.post('/',(req,res)=>{
   var shortUrl
   con.query(`select * from shortUrl where fullUrl="${init_url}"`,(err,rows,fields)=>{
     if(err) throw err;
-    console.log(rows[0].shortUrl);
     if(rows.length == 0) {
       shortUrl = "abc"
        con.query(`insert into shortUrl values("${init_url}","${shortUrl}",0)`,(err,row,field)=>{
@@ -36,4 +35,13 @@ app.post('/',(req,res)=>{
 })
 
 
-// app.get()
+app.get('/:shortUrl',(req,res)=>{
+  const x = req.params.shortUrl
+  var fullUrl
+  con.query(`select * from shortUrl where shortUrl="${x}"`,(err,rows,fields)=>{
+    if(err) throw err
+    fullUrl = rows[0].fullUrl
+  })
+  console.log(x);
+  setTimeout(() =>{console.log(fullUrl);res.redirect(fullUrl)},3000)
+})
