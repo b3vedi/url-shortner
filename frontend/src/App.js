@@ -11,8 +11,7 @@ function App() {
     console.log(event.target.value);
   }
   function handleSubmit(){
-  axios.post("http://localhost/",{"url":inurl})
-  }
+  axios.post("http://localhost/",{"url":inurl}).then((response)=>{console.log(response.data);})}
   return (
     <div 
       style={{

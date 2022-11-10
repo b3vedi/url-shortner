@@ -1,6 +1,5 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const sql = require('mysql')
 const con = require('./connection')
 
 dotenv.config({path:'../.env'})
@@ -20,12 +19,21 @@ app.listen(port,()=>{
 })
 
 app.post('/',(req,res)=>{
-  const init_url = req.body.url 
-  console.log(init_url)
-  con.connect() 
-  // con.query('select * from user',(data,err)=>{
-  //   if (err) throw(err);
-  //   console.log(data)
-  // })
-    res.send('hello welcome to our website')
+  const init_url = req.body.url
+  var shortUrl
+  con.query(`select * from shortUrl where fullUrl="${init_url}"`,(err,rows,fields)=>{
+    if(err) throw err;
+    console.log(rows[0].shortUrl);
+    if(rows.length == 0) {
+      shortUrl = "abc"
+       con.query(`insert into shortUrl values("${init_url}","${shortUrl}",0)`,(err,row,field)=>{
+        if(err) throw err
+      })
+    }
+    else shortUrl = rows[0].shortUrl
+  })
+  setTimeout(() =>{res.send(process.env.URL+shortUrl)},3000) 
 })
+
+
+// app.get()
