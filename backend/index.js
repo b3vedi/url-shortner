@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 const sql = require('mysql')
 const con = require('./connection')
 
-dotenv.config()
+dotenv.config({path:'../.env'})
 app = express()
 app.use(express.json());
 app.use(function (req, res, next) {
@@ -21,9 +21,11 @@ app.listen(port,()=>{
 
 app.post('/',(req,res)=>{
   const init_url = req.body.url 
-  console.log(init_url) 
-  con.query("select * from user",(data)=>{
-    console.log(data);
-  })
+  console.log(init_url)
+  con.connect() 
+  // con.query('select * from user',(data,err)=>{
+  //   if (err) throw(err);
+  //   console.log(data)
+  // })
     res.send('hello welcome to our website')
 })

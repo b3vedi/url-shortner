@@ -10,18 +10,22 @@ function App() {
     console.log(inurl);
     console.log(event.target.value);
   }
+  function handleSubmit(){
   axios.post("http://localhost/",{"url":inurl})
+  }
   return (
     <div 
       style={{
         padding:"10px",
-        alignItems:"center",
-        margin:"10px"
+        margin:"10px",
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"space-around"
       }}
     >
       <label htmlFor='inurl'>Please provide the input url</label>
       <input id='inurl' value={inurl} onChange={handleChange}></input>
-      <br/>
+      <button onClick={handleSubmit}>Submit</button>
       <label htmlFor='outurl'>The output url generated is:</label>
       <text id='outurl'>output</text>
     </div>
