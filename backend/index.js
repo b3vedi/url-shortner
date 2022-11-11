@@ -21,27 +21,34 @@ app.listen(port,()=>{
 app.post('/',(req,res)=>{
   const init_url = req.body.inurl
   var out_url = req.body.outurl
-  con.query(`select * from shortUrl where fullUrl="${init_url}"`,(err,rows,fields)=>{
+  var shortUrl
+  // let myPromise = new Promise((resolve,reject)=>{
+
+  // })
+  con.query(`select * from shortUrl where shortUrl="${out_url}"`,(err,rows,fields)=>{
     if(err) throw err;
+    console.log(rows);
     if(rows.length == 0) {
       shortUrl = out_url
-       con.query(`insert into shortUrl values("${init_url}","${shortUrl}",0)`,(err,row,field)=>{
-        if(err) throw err
+       con.query(`insert into shortUrl values("${init_url}","${shortUrl}")`,(error,row,field)=>{
+        if(error) throw error
       })
     }
-    else shortUrl = rows[0].shortUrl
+    else {(rows[0].fullUrl == init_url)? res.send(process.env.URL+rows[0].shortUrl):res.send("Use someother shortener this is taken")}
   })
-  setTimeout(() =>{res.send(process.env.URL+shortUrl)},3000) 
 })
 
 
 app.get('/:shortUrl',(req,res)=>{
   const x = req.params.shortUrl
   var fullUrl
-  con.query(`select * from shortUrl where shortUrl="${x}"`,(err,rows,fields)=>{
+  con.query(`select * from shortUrl where shortUrl="${x}"`,(err,rows)=>{
     if(err) throw err
-    fullUrl = rows[0].fullUrl
+    fullUrl=rows[0].fullUrl
+    console.log(fullUrl);
   })
-  console.log(x);
-  setTimeout(() =>{console.log(fullUrl);res.redirect(fullUrl)},3000)
+  setTimeout(()=>{},3000)
+  console.log(fullUrl);
+  if(fullUrl == null) return res.status(404).send()
+  res.redirect(fullUrl)
 })

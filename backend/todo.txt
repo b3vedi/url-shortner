@@ -1,0 +1,2 @@
+one full url can be connected with two or more urls
+learn promises in js and remove all callbacks
