@@ -19,12 +19,12 @@ app.listen(port,()=>{
 })
 
 app.post('/',(req,res)=>{
-  const init_url = req.body.url
-  var shortUrl
+  const init_url = req.body.inurl
+  var out_url = req.body.outurl
   con.query(`select * from shortUrl where fullUrl="${init_url}"`,(err,rows,fields)=>{
     if(err) throw err;
     if(rows.length == 0) {
-      shortUrl = "abc"
+      shortUrl = out_url
        con.query(`insert into shortUrl values("${init_url}","${shortUrl}",0)`,(err,row,field)=>{
         if(err) throw err
       })
