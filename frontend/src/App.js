@@ -5,7 +5,7 @@ import axios from "axios"
 
 function App() {
   const [inurl,setInurl] = useState('')
-  const [outurl,setOuturl] = useState('')
+  const [outurl,setOuturl] = useState()
   function handleInChange(event){
     setInurl(event.target.value);
     console.log(inurl);
