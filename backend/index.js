@@ -28,7 +28,7 @@ app.post('/',(req,res)=>{
     if(err) throw err;
     if(rows.length == 0) {
       shortUrl = out_url
-       con.query(`insert into shortUrl values("${init_url}","${shortUrl}")`,(error,row,field)=>{
+       con.query(`insert into shortUrl values("${init_url}","${shortUrl}",0)`,(error,row,field)=>{
         if(error) throw error
         else res.send(process.env.URL+out_url)
       })
@@ -45,6 +45,7 @@ app.get('/:shortUrl',(req,res)=>{
     if(err) throw err
     if(rows.length == 0) return res.sendStatus(404)
     fullUrl=rows[0].fullUrl
+    con.query(`update shortUrl set clicks=${rows[0].clicks+1} where shortUrl="${rows[0].shortUrl}"`)
     res.redirect(fullUrl)
   })
 })
