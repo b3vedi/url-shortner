@@ -2,6 +2,10 @@ const express = require('express')
 const dotenv = require('dotenv')
 const con = require('./connection')
 const shortId = require('shortid')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const { isValid } = require('shortid')
+
 
 dotenv.config({path:'../.env'})
 app = express()
@@ -23,6 +27,7 @@ app.post('/',(req,res)=>{
   const init_url = req.body.inurl
   var out_url = req.body.outurl
   if(out_url == null) out_url = shortId.generate()
+  else out_url = out_url.trim()
   var shortUrl
   con.query(`select * from shortUrl where shortUrl="${out_url}" or fullUrl ="${init_url}"`,(err,rows,fields)=>{
     if(err) throw err;
@@ -37,6 +42,16 @@ app.post('/',(req,res)=>{
   })
 })
 
+app.post('/login',(req,res) =>{
+  let username = req.body.username
+  let password = req.body.password
+  con.query(`select password from users where username="${username}"`,async(err,rows,fields)=>{
+    if(err != undefined) throw err
+    let hash = rows[0]
+    let isValid = await bcrypt.compare(password,hash)
+    (isValid) ? res.send(jwt.sign(req.body.username,process.env.JWT_SECRET_KEY)):res.redirect(`${process.env.URL}/signup`)
+  })
+})
 
 app.get('/:shortUrl',(req,res)=>{
   const x = req.params.shortUrl
@@ -48,4 +63,9 @@ app.get('/:shortUrl',(req,res)=>{
     con.query(`update shortUrl set clicks=${rows[0].clicks+1} where shortUrl="${rows[0].shortUrl}"`)
     res.redirect(fullUrl)
   })
+})
+
+app.get('/:shortUrl/analytics',(req,res)=>{
+  console.log(req)
+  res.send("nikal idhar se")
 })
