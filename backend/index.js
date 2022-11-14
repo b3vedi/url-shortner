@@ -4,7 +4,6 @@ const con = require('./connection')
 const shortId = require('shortid')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const { isValid } = require('shortid')
 
 
 dotenv.config({path:'../.env'})
@@ -45,11 +44,9 @@ app.post('/',(req,res)=>{
 app.post('/login',(req,res) =>{
   let username = req.body.username
   let password = req.body.password
-  con.query(`select password from users where username="${username}"`,async(err,rows,fields)=>{
+  con.query(`select password from user where username="${username}"`,(err,rows,fields)=>{
     if(err != undefined) throw err
-    let hash = rows[0]
-    let isValid = await bcrypt.compare(password,hash)
-    (isValid) ? res.send(jwt.sign(req.body.username,process.env.JWT_SECRET_KEY)):res.redirect(`${process.env.URL}/signup`)
+    (bcrypt.compareSync(password,rows[0].password)) ? res.send(jwt.sign(req.body.username,process.env.JWT_SECRET_KEY)):res.send(`${process.env.URL}signup`)
   })
 })
 

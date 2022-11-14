@@ -1,5 +1,6 @@
 import {  useState } from 'react';
 import axios from "axios"
+import Navbar from "./Navbar";
 
 
 function App() {
@@ -16,15 +17,7 @@ function App() {
   {document.getElementById('outUrl').innerHTML=response.data;
   document.getElementById('outUrl').href = response.data})}
   return (<>
-    <nav style={{
-      display:"flex",
-      flexDirection:"row",
-      backgroundColor:"#E27D60",
-      color:"purple",
-      justifyContent:"center",
-    }}><h1 style={{marginRight:"auto",marginLeft:"100px"}}>Welcome to Url shortner</h1>
-      <p style={{marginRight:"50px",color:"green"}}>Shorten your urls in one go</p>
-    </nav>
+      <Navbar />
     <div 
       style={{
         padding:"10px",
