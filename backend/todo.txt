@@ -1,1 +1,3 @@
 add analytics page for admin
+use jwt for authentication and protecting routes
+use mongo instead of sql
