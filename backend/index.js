@@ -4,6 +4,7 @@ const con = require('./connection')
 const shortId = require('shortid')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const path = require('path')
 
 
 dotenv.config({path:'../.env'})
@@ -14,6 +15,15 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "*");
     next()
 });
+
+// ----------------- deployment ---------------------------
+
+if(process.env.NODE_ENV === "production"){__dirname = path.resolve()
+app.use(express.static(path.join(__dirname,'../frontend/build')))
+app.get('*',(req,res)=>{
+  res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+})}
+// ----------------- deployment ---------------------------
 
 
 const port = process.env.PORT || 5000

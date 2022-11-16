@@ -13,7 +13,7 @@ function App() {
     setOuturl(event.target.value)
   }
   function handleSubmit(){
-  axios.post("http://localhost/",{"inurl":inurl,"outurl":outurl}).then((response)=>
+  axios.post("/",{"inurl":inurl,"outurl":outurl}).then((response)=>
   {document.getElementById('outUrl').innerHTML=response.data;
   document.getElementById('outUrl').href = response.data})}
   return (<>

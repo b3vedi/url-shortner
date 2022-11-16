@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon --watch ."
+    "dev": "nodemon --watch .",
+    "heroku-postbuild" : "NPM_CONFIG_PRODCTION=false npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
