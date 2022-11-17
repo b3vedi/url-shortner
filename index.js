@@ -4,7 +4,7 @@ const shortId = require('shortid')
 const ShortUrl = require('./connection')
 const app = express()
 const path = require('path')
-require('dotenv').config({path:'/.env'})
+require('dotenv').config({path:'./.env'})
 
 app.use(express.json());
 app.use(function (req, res, next) {
@@ -31,7 +31,7 @@ app.listen(port,()=>{
 if(process.env.NODE_ENV === "production"){__dirname = path.resolve()
 app.use(express.static(path.join(__dirname,'./frontend/build')))
 app.get('*',(req,res)=>{
-  res.sendFile('index.html')
+  res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
 })}
 // ----------------- deployment ---------------------------
 
