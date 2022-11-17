@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const shortId = require('shortid')
 const ShortUrl = require('./connection')
 const app = express()
+require('dotenv').config({path:'/.env'})
 
 app.use(express.json());
 app.use(function (req, res, next) {
@@ -11,6 +12,14 @@ app.use(function (req, res, next) {
     next()
 });
 
+// ----------------- deployment ---------------------------
+
+if(process.env.NODE_ENV === "production"){__dirname = path.resolve()
+app.use(express.static(path.join(__dirname,'./frontend/build')))
+app.get('*',(req,res)=>{
+  res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+})}
+// ----------------- deployment ---------------------------
 
 mongoose.connect(`mongodb+srv://${process.env.USER_NAME}:${process.env.PASSWORD}@cluster0.7wofpmp.mongodb.net/?retryWrites=true&w=majority`, {
   useNewUrlParser: true, useUnifiedTopology: true
@@ -44,41 +53,12 @@ app.get('/:shortUrl',async(req,res)=>{
   const x = req.params.shortUrl
   var fullUrl
   var result = await ShortUrl.findOne({short:x})
-  if(result == undefined) res.send(404).send()
-  else{
-    fullUrl = result.full
-    result.clicks++
-    result.save()
-    res.redirect(fullUrl)
-  } 
+  if(result == undefined) return res.send(404).send()
+  fullUrl = result.full
+  result.clicks++
+  result.save()
+  res.redirect(fullUrl)
 })
-
-// app.post('/', async (req, res) => {
-//   const shortUrls = await ShortUrl.find()
-//   res.send(shortUrls)
-// })
-
-// app.post('/shortUrls', async (req, res) => {
-//   await ShortUrl.create({ full: req.body.fullUrl })
-
-//   res.redirect('/')
-// })
-
-// app.get('/:shortUrl', async (req, res) => {
-//   const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
-//   if (shortUrl == null) return res.sendStatus(404)
-
-//   shortUrl.clicks++
-//   shortUrl.save()
-
-//   res.redirect(shortUrl.full)
-// })
-
-
-
-
-
-
 // const express = require('express')
 // const dotenv = require('dotenv')
 // const model = require('./connection')
@@ -88,29 +68,6 @@ app.get('/:shortUrl',async(req,res)=>{
 // const path = require('path')
 // const mongoose = require('mongoose')
 
-// mongoose.connect('mongodb://localhost/urlurlShortener', {
-//   useNewUrlParser: true, useUnifiedTopology: true
-// })
-
-
-// dotenv.config({path:'../.env'})
-// app = express()
-// app.use(express.json());
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "*");
-//     next()
-// });
-
-// // ----------------- deployment ---------------------------
-
-// if(process.env.NODE_ENV === "production"){__dirname = path.resolve()
-// app.use(express.static(path.join(__dirname,'../frontend/build')))
-// app.get('*',(req,res)=>{
-//   res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
-// })}
-// // ----------------- deployment ---------------------------
-
 
 
 // app.post('/login',(req,res) =>{
@@ -119,18 +76,6 @@ app.get('/:shortUrl',async(req,res)=>{
 //   con.query(`select password from user where username="${username}"`,(err,rows,fields)=>{
 //     if(err != undefined) throw err
 //     (bcrypt.compareSync(password,rows[0].password)) ? res.send(jwt.sign(req.body.username,process.env.JWT_SECRET_KEY)):res.send(`${process.env.URL}signup`)
-//   })
-// })
-
-// app.get('/:shortUrl',(req,res)=>{
-//   const x = req.params.shortUrl
-//   var fullUrl
-//   con.query(`select * from shortUrl where shortUrl="${x}"`,(err,rows)=>{
-//     if(err) throw err
-//     if(rows.length == 0) return res.sendStatus(404)
-//     fullUrl=rows[0].fullUrl
-//     con.query(`update shortUrl set clicks=${rows[0].clicks+1} where shortUrl="${rows[0].shortUrl}"`)
-//     res.redirect(fullUrl)
 //   })
 // })
 
