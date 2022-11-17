@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const shortId = require('shortid')
 const ShortUrl = require('./connection')
 const app = express()
+const path = require('path')
 require('dotenv').config({path:'/.env'})
 
 app.use(express.json());
