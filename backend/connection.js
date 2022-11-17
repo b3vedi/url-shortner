@@ -1,15 +1,22 @@
 const dotenv = require('dotenv')
-const sql = require('mysql')
-
-
+const mongoose = require('mongoose')
+const shortId = require('shortid')
 dotenv.config({path:'../.env'})
 
-const connection = sql.createConnection({
-  host: process.env.HOST_NAME,
-  user: process.env.USER_NAME,
-      database: process.env.DB_NAME,
-      password: process.env.PASSWORD
-  })
+const shortUrlSchema = new mongoose.Schema({
+  full:{
+    type:String,
+    required: true
+  },
+  short:{
+    type:String,
+    required:true,
+    default:shortId.generate
+  },
+  clicks:{
+    type:Number,
+    default:0
+  }
+})
 
-
-module.exports= connection
+module.exports= mongoose.model('ShortUrl',shortUrlSchema)
