@@ -13,7 +13,7 @@ function App() {
     setOuturl(event.target.value)
   }
   function handleSubmit(){
-  axios.post(`${process.env.REACT_APP_URL}/`,{"inurl":inurl,"outurl":outurl}).then((response)=>
+  axios.post(`${process.env.REACT_APP_URL}`,{"inurl":inurl,"outurl":outurl}).then((response)=>
   {document.getElementById('outUrl').innerHTML=response.data;
   document.getElementById('outUrl').href = response.data})}
   return (<>
