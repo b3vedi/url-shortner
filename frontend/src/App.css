@@ -4,5 +4,6 @@
 }
 
 body{
-  background-color: #85DCB8;
+  /* background-color: #85DCB8; */
+  background-image: url('../public/background.jpeg');
 }

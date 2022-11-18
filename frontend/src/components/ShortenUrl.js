@@ -1,6 +1,7 @@
 import {  useState } from 'react';
 import axios from "axios"
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 
 function App() {
@@ -24,7 +25,9 @@ function App() {
         margin:"10px",
         display:"flex",
         flexDirection:"column",
-        alignItems:"center"
+        alignItems:"center",
+        backgroundColor:"white",
+        opacity:"0.9"
       }}
     >
       <label htmlFor='inurl' className='inside'>The url which you want to shorten:</label>
@@ -35,6 +38,7 @@ function App() {
       <label className='inside'  htmlFor='outUrl'>The output url generated is:</label>
       <a  href className='inside' id='outUrl'>output</a>
     </div>
+    <Footer />
     </>
   );
 }
