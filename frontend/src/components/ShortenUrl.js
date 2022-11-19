@@ -25,18 +25,31 @@ function App() {
         margin:"10px",
         display:"flex",
         flexDirection:"column",
-        alignItems:"center",
-        backgroundColor:"white",
-        opacity:"0.9"
+        alignItems:"flex-start",
+        // backgroundColor:"#00BFFF",
+        backgroundColor:"#353935",
+        // opacity:"0.9",
+        // color:"#FEBE10",
+        color:"wheat",
+        fontFamily:"cursive",
+        fontSize:23,
+        borderRadius:"50px",
+        maxWidth:"700px"
       }}
     >
-      <label htmlFor='inurl' className='inside'>The url which you want to shorten:</label>
-      <input id='inurl' className='inside' value={inurl} onChange={handleInChange}></input>
-      <label htmlFor='outurl' className='inside'>alias</label>
-      <input id='outurl' className='inside' value={outurl} onChange={handleOutChange}></input>
-      <button className='inside' onClick={handleSubmit}>Submit</button>
+      <div
+        className='alignContent'
+      >
+        <label htmlFor='inurl' className='inside' style={{alignItems:"flex-start"}}>The url which you want to shorten:</label>
+        <input id='inurl' className='inside' style={{alignItems:"flex-end"}} value={inurl} onChange={handleInChange}></input>
+      </div>
+      <div className='alignContent'>
+        <label htmlFor='outurl' className='inside'>alias </label>
+        <input id='outurl' className='inside' value={outurl} onChange={handleOutChange}></input>
+      </div>
+      <button className='inside submit-button' onClick={handleSubmit}>Submit</button>
       <label className='inside'  htmlFor='outUrl'>The output url generated is:</label>
-      <a  href className='inside' id='outUrl'>output</a>
+      <a  href className='inside' id='outUrl' style={{color:"wheat"}}>output</a>
     </div>
     <Footer />
     </>
