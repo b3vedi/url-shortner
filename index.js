@@ -1,10 +1,12 @@
+const jwt = require('jsonwebtoken')
 const express = require('express')
 const mongoose = require('mongoose')
 const shortId = require('shortid')
-const ShortUrl = require('./connection')
+const {ShortUrl,User} = require('./connection')
 const app = express()
 const path = require('path')
 const {URL} = require('url')
+const bcrypt = require('bcrypt')
 require('dotenv').config({path:'./.env'})
 
 app.use(express.json());
@@ -43,6 +45,10 @@ app.post('/',async(req,res)=>{
   if(regex.test(init_url) == false){
     return res.send("invalid Url entered")
   }
+  regex = RegExp("((http|https)://)(www.)?" + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]" + "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)")
+  if(regex.test(init_url) == false){
+    return res.send("please enter full url")
+  }
   if(out_url == null ) out_url = shortId.generate()
   else out_url = out_url.trim()
   var result = await ShortUrl.findOne({$or:[{full:init_url},{short:out_url}]})
@@ -63,31 +69,27 @@ app.get('/:shortUrl',async(req,res)=>{
   result.save()
   res.redirect(fullUrl)
 })
-// const express = require('express')
-// const dotenv = require('dotenv')
-// const model = require('./connection')
-// const shortId = require('shortid')
-// const jwt = require('jsonwebtoken')
-// const bcrypt = require('bcrypt')
-// const path = require('path')
-// const mongoose = require('mongoose')
 
 
 
-// app.post('/login',(req,res) =>{
-//   let username = req.body.username
-//   let password = req.body.password
-//   con.query(`select password from user where username="${username}"`,(err,rows,fields)=>{
-//     if(err != undefined) throw err
-//     (bcrypt.compareSync(password,rows[0].password)) ? res.send(jwt.sign(req.body.username,process.env.JWT_SECRET_KEY)):res.redirect(`${process.env.URL}signup`)
-//   })
-// })
+app.post('/login',async(req,res) =>{
+  let username = req.body.username
+  let password = req.body.password
+  var result = await User.findOne({username:username})
+  if(result == null) return res.send(`please signup at ${process.env.URL}signup`)
+  var x = await bcrypt.compareSync(password,result.password)
+  x? res.send(jwt.sign(req.body.username,process.env.JWT_SECRET_KEY)):res.send(`Wrong password`)
+})
 
 // app.post('/signup')
 
 app.get('/:shortUrl/analytics',async(req,res)=>{
+  var token = req.headers.authorization
+  token = token.split(" ")[1]
+  var isLoggedIn = await jwt.verify(token,process.env.JWT_SECRET_KEY)
+  if(!isLoggedIn)return res.send(`Please login at : ${process.env.URL}signup`)
   const x = req.params.shortUrl
   var result = await ShortUrl.findOne({short:x})
-  if(result === undefined) {console.log(result);return res.sendStatus(404)}
+  if(result === undefined) {return res.sendStatus(404)}
   res.send(`${result.clicks}`)
 })

@@ -19,16 +19,15 @@ const shortUrlSchema = new mongoose.Schema({
   }
 })
 
-// const userSchema = new mongoose.Schema({
-//   username:{
-//     type:String,
-//     required:true,
-//   },
-//   password:{
-//     type:String,
-//     required:true
-//   }
-// })
+const userSchema = new mongoose.Schema({
+  username:{
+    type:String,
+    required:true,
+  },
+  password:{
+    type:String,
+    required:true
+  }
+})
 
-module.exports= mongoose.model('ShortUrl',shortUrlSchema)
-// module.exports = mongoose.model('User',userSchema)
+module.exports= {ShortUrl:mongoose.model('ShortUrl',shortUrlSchema),User:mongoose.model('User',userSchema)}
