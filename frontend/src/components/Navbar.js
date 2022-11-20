@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React from 'react'
 
 export default function Navbar() {
@@ -17,11 +18,15 @@ export default function Navbar() {
       justifyContent:"center",
       maxHeight:"75px"
     }}>
-      <a href='/' style={{margin:"0px",padding:"10px",marginRight:"auto"}}>
+      <Link to={'/'} style={{margin:"0px",padding:"10px",marginRight:"auto"}}>
         <img src='logo192.png' alt='' width={"150 px"} style={{opacity:1}}></img>
-      </a>
-      <button style={buttonStyles}>Sign Up</button>
+      </Link>
+      <Link to={'/signup'}>
+      <button style={buttonStyles}>Sign Up</button></Link>
+      <Link to={'/login'}>
       <button style={buttonStyles}>Login</button>
+      </Link>
+      <button style={buttonStyles} onClick={()=>{localStorage.removeItem('__kohly__jwt')}}>Logout</button>
     </nav>
   )
 }

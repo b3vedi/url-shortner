@@ -5,7 +5,6 @@ const shortId = require('shortid')
 const {ShortUrl,User} = require('./connection')
 const app = express()
 const path = require('path')
-const {URL} = require('url')
 const bcrypt = require('bcrypt')
 require('dotenv').config({path:'./.env'})
 
