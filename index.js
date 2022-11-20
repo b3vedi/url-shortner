@@ -80,12 +80,25 @@ app.post('/login',async(req,res) =>{
   x? res.send(jwt.sign(req.body.username,process.env.JWT_SECRET_KEY)):res.send(`Wrong password`)
 })
 
+app.post('/signup',async(req,res) =>{
+  let username = req.body.username
+  let password = req.body.password
+  var result = await User.findOne({username:username})
+  if(result == null) return res.send(`please signup at ${process.env.URL}signup`)
+  var x = await bcrypt.compareSync(password,result.password)
+  x? res.send(jwt.sign(req.body.username,process.env.JWT_SECRET_KEY)):res.send(`Wrong password`)
+})
+
 // app.post('/signup')
 
 app.get('/:shortUrl/analytics',async(req,res)=>{
+  if(! req.get('authorization').startsWith('Bearer')) return res.sendStatus(404)
   var token = req.headers.authorization
   token = token.split(" ")[1]
-  var isLoggedIn = await jwt.verify(token,process.env.JWT_SECRET_KEY)
+  try{
+    var isLoggedIn = await jwt.verify(token,process.env.JWT_SECRET_KEY)
+  }
+  catch(err){return res.send("invalid token please login again ")}
   if(!isLoggedIn)return res.send(`Please login at : ${process.env.URL}signup`)
   const x = req.params.shortUrl
   var result = await ShortUrl.findOne({short:x})

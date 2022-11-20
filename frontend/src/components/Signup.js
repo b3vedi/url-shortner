@@ -12,7 +12,7 @@ export default function Signup() {
     })
   }
   function handleSubmit() {
-    axios.post('/',{...form})
+    axios.post(`${process.env.REACT_APP_URL}/signup`,{...form})
   }
   return (
     <div>
