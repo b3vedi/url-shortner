@@ -1,10 +1,39 @@
+html{
+  font-size: 16px;
+}
+
+@media only screen and (min-width:360px) {
+  html{
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width:720px) {
+  html{
+    font-size: 18px;
+  }
+}
+
+@media only screen and (min-width:960px) {
+  html{
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width:1240px) {
+  html{
+    font-size: 24px;
+  }
+}
+
 .inside{
-  margin: 20px;
-  margin-left: 10px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  max-width: 400px;
-  padding: 10px;
+  margin: 1.25rem;
+  margin-left: 0.625rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  max-width: 25rem;
+  padding: 0.625rem;
+  font-size: 1rem;
 }
 
 .alignContent{
@@ -15,15 +44,15 @@
 }
 
 input{
-  border-radius: 10px;
+  border-radius: 0.625rem;
 }
 
 .submit-button{
-  border-radius: 10px;
+  border-radius: 0.625rem;
   background-color: green;
   color: white;
-  width: 1000px;
-  font-size: 20px;
+  width: 10rem;
+  font-size: 1rem;
   font-family: cursive;
 }
 

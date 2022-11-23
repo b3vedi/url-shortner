@@ -21,8 +21,8 @@ function App() {
       <Navbar />
     <div 
       style={{
-        padding:"10px",
-        margin:"10px",
+        padding:"0.625rem",
+        margin:"0.625rem",
         display:"flex",
         flexDirection:"column",
         alignItems:"flex-start",
@@ -30,19 +30,19 @@ function App() {
         color:"wheat",
         fontFamily:"cursive",
         fontSize:23,
-        borderRadius:"50px",
-        maxWidth:"700px"
+        borderRadius:"3.125rem",
+        width:"50%"
       }}
     >
       <div
         className='alignContent'
       >
-        <label htmlFor='inurl' className='inside' style={{alignItems:"flex-start"}}>The url which you want to shorten:</label>
-        <input id='inurl' className='inside' style={{alignItems:"flex-end"}} value={inurl} onChange={handleInChange}></input>
+        <label htmlFor='inurl' className='inside' style={{width:"50%"}}>The url which you want to shorten:</label>
+        <input id='inurl' className='inside' style={{width:"50%"}} value={inurl} onChange={handleInChange}></input>
       </div>
       <div className='alignContent'>
-        <label htmlFor='outurl' className='inside'>alias </label>
-        <input id='outurl' className='inside' value={outurl} onChange={handleOutChange}></input>
+        <label htmlFor='outurl' className='inside' style={{width:"50%"}}>alias </label>
+        <input id='outurl' className='inside' style={{width:"50%"}} value={outurl} onChange={handleOutChange}></input>
       </div>
       <button className='inside submit-button' onClick={handleSubmit}>Submit</button>
       <label className='inside'  htmlFor='outUrl'>The output url generated is:</label>

@@ -19,12 +19,12 @@ export default function Login() {
     <div>
         <Navbar />
         <div
-            style={{flexDirection:"column",backgroundColor:"#353935",margin:"5% 20%",padding:"50px",color:"wheat",fontSize:30,opacity:0.9}}>
-            <div className='alignContent' style={{margin:"20px",padding:"10px",justifyContent:"space-around"}}>
+            style={{flexDirection:"column",backgroundColor:"#353935",margin:"5% 20%",padding:"3.125rem",color:"wheat",opacity:0.9}}>
+            <div className='alignContent' style={{margin:"1.25rem",padding:"0.625rem",justifyContent:"space-around"}}>
                 <label htmlFor='username' >Username: </label>
-                <input id='username' value={form.username} placeholder={"Enter Username Here"} size={30} onChange={handleFormChange}></input>
+                <input id='username' value={form.username} placeholder={"Enter Username Here"} onChange={handleFormChange}></input>
             </div>
-            <div className='alignContent'style={{margin:"20px",padding:"10px",justifyContent:"space-around"}}>
+            <div className='alignContent'style={{margin:"1.25rem",padding:"0.625rem",justifyContent:"space-around"}}>
                 <label htmlFor='password' >Password: </label>
                 <input type={"password"} placeholder={"Enter Password Here"} id='password' value={form.password} onChange={handleFormChange}></input>
             </div>
